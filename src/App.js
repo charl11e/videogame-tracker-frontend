@@ -25,6 +25,14 @@ function App() {
     }
   }, [selectedUserId]);
 
+  // Restore selected user from localstorage on initial load
+  useEffect(() => {
+    const savedUserId = localStorage.getItem('selectedUserId');
+    if (savedUserId) {
+      setSelectedUserId(savedUserId);
+    }
+  }, [])
+
   return (
     <div>
       <h1>Video Game Tracker</h1>
@@ -32,7 +40,11 @@ function App() {
       {/* Selector for picking a user */}
       <label htmlFor="user-select">Select User: </label>
       <select id="user-select" value={selectedUserId}
-      onChange={(e) => setSelectedUserId(e.target.value)}>
+      onChange={(e) => {
+        const id = e.target.value;
+        setSelectedUserId(id);
+        localStorage.setItem('selectedUserId', id);
+      }}>
         
         <option value="">-- Choose a user --</option>
         {users.map(user => (
