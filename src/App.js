@@ -34,11 +34,22 @@ function App() {
       <select id="user-select" value={selectedUserId}
       onChange={(e) => setSelectedUserId(e.target.value)}>
         
-        <option value="">Choose a user</option>
+        <option value="">-- Choose a user --</option>
         {users.map(user => (
           <option key={user.id} value ={user.id}>{user.username}</option>
         ))}
       </select>
+
+      {/* Display games for the selected user */}
+      <h2>Games:</h2>
+      <ul>
+        {games.length === 0 && selectedUserId && <li>No games found for user</li>}
+        {games.map (game => (
+          <li key={game.id}>
+            {game.title} ({game.platform})
+          </li>
+        ))}
+      </ul>
 
     </div>
   );
