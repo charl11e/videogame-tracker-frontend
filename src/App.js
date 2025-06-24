@@ -34,31 +34,42 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <h1>Video Game Tracker</h1>
+    <div className="min-h-screen bg-neutral-100 p-4 gap-4 items-center flex flex-col">
+
+      <h1 className="text-4xl font-bold">Game Library</h1>
 
       {/* Selector for picking a user */}
-      <label htmlFor="user-select">Select User: </label>
-      <select id="user-select" value={selectedUserId}
-      onChange={(e) => {
-        const id = e.target.value;
-        setSelectedUserId(id);
-        localStorage.setItem('selectedUserId', id);
-      }}>
-        
-        <option value="">-- Choose a user --</option>
-        {users.map(user => (
-          <option key={user.id} value ={user.id}>{user.username}</option>
-        ))}
-      </select>
+      <div className="w-full flex justify-end">
+        <label htmlFor="user-select">Select User: </label>
+        <select id="user-select" value={selectedUserId}
+        onChange={(e) => {
+          const id = e.target.value;
+          setSelectedUserId(id);
+          localStorage.setItem('selectedUserId', id);
+        }}>
+          
+          <option value="">-- Choose a user --</option>
+          {users.map(user => (
+            <option key={user.id} value ={user.id}>{user.username}</option>
+          ))}
+        </select>
+      </div>
 
       {/* Display games for the selected user */}
       <h2>Games:</h2>
-      <ul>
+      <ul className='mt-6 grid gtid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
         {games.length === 0 && selectedUserId && <li>No games found for user</li>}
         {games.map (game => (
-          <li key={game.id}>
-            {game.title} ({game.platform})
+          <li key={game.id} className="bg-white rounded-xl shadow-lg flex items-center gap-4 p-4">
+
+            {/* Display game cover image */}
+            <div className="w-16 h-20 bg-gray-200 rounded-md mb-4"></div>
+
+            {/* Game info */}
+            <div>
+              <p className="text-lg font-semibold text-gray-800">{game.title}</p>
+              <p className="text-sm text-gray-500">{game.platform}</p>
+            </div>
           </li>
         ))}
       </ul>
