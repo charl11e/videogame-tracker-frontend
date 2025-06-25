@@ -60,11 +60,13 @@ function App() {
       <ul className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
         {games.length === 0 && selectedUserId && <li>No games found for user</li>}
         {games.map (game => (
-          <li key={game.id} className="bg-white rounded-xl shadow-lg flex items-center gap-4 p-4 w-72 min-h-28" style={{ alignItems: 'flex-start' }}>
+          <li key={game.id} className="bg-white rounded-xl shadow-lg flex items-center gap-4 p-4 w-72 min-h-28 relative group" style={{ alignItems: 'flex-start' }}>
             {/* Display game cover image */}
             <div className="w-16 h-20 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center"></div>
+            {/* Hover effect for managing game */}
+            <button className="absolute top-4 right-5 text-gray-400 hover:text-gray-600 hidden group-hover:block text-3xl" title="Manage game">⋮</button>
             {/* Game info */}
-            <div>
+            <div className="pr-6">
               <p className="text-lg font-semibold text-gray-800 break-words hyphens-auto">{game.title}</p>
               <p className="text-sm text-gray-500">{game.platform}</p>
             </div>
