@@ -9,6 +9,9 @@ function App() {
   const [selectedUserId, setSelectedUserId] = useState('');
   const [games, setGames] = useState([]);
 
+  // Setup hooks to manage game menus
+  const [openMenuId, setOpenMenuId] = useState(null);
+
   // Get list of users
   useEffect(() => {
     api.fetchUsers().then(res => setUsers(res.data))
@@ -61,10 +64,25 @@ function App() {
         {games.length === 0 && selectedUserId && <li>No games found for user</li>}
         {games.map (game => (
           <li key={game.id} className="bg-white rounded-xl shadow-lg flex items-center gap-4 p-4 w-72 min-h-28 relative group" style={{ alignItems: 'flex-start' }}>
+            
             {/* Display game cover image */}
             <div className="w-16 h-20 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center"></div>
+            
             {/* Hover effect for managing game */}
-            <button className="absolute top-4 right-5 text-gray-400 hover:text-gray-600 hidden group-hover:block text-3xl" title="Manage game">⋮</button>
+            <button className="absolute top-4 right-5 text-gray-400 hover:text-gray-600 hidden group-hover:block text-3xl" title="Manage game"
+            onClick={(e) =>
+              setOpenMenuId (openMenuId === game.id ? null : game.id) 
+            }
+            >⋮</button>
+
+            {/* Dropdown menu for managing game */}
+            {openMenuId === game.id && (
+              <div className="absolute top-14 right-2 bg-white border rounded-md shadow-md z-10">
+                <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">Edit</button>
+                <button className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left">Delete</button>
+              </div>
+              )}
+
             {/* Game info */}
             <div className="pr-6">
               <p className="text-lg font-semibold text-gray-800 break-words hyphens-auto">{game.title}</p>
