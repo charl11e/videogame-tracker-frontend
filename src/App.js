@@ -17,7 +17,7 @@ function App() {
   const [editedTitle, setEditedTitle] = useState('');
   const [editedPlatform, setEditedPlatform] = useState('');
 
-  // Event listener to close menu when clicking outside
+  // Event listener to close dropdown menu when clicking outside
   const menuRef = useRef(null);
   useEffect(() => {
     function handleClickOutside(event) {
@@ -31,6 +31,36 @@ function App() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+
+  // Event listener to close modal when clicking outside
+  const modalRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutsideModal(event) {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setEditingGame(null);
+        setEditedTitle('');
+        setEditedPlatform('');
+      }
+    }
+
+    function handleKeyOutsideModal(event) {
+      if (event.key === 'Escape') {
+        setEditingGame(null);
+        setEditedTitle('');
+        setEditedPlatform('');
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutsideModal);
+
+    document.addEventListener('keydown', handleKeyOutsideModal);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideModal);
+      document.removeEventListener('keydown', handleKeyOutsideModal);
+    }
+  }, [])
 
   // Get list of users
   useEffect(() => {
@@ -124,7 +154,7 @@ function App() {
       {editingGame && (
 
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <div ref={modalRef} className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h3 className="text-2xl font-bold mb-4">Edit Game</h3>
 
             <label className="block mb-2 text-xl font-semibold">
