@@ -17,6 +17,9 @@ function App() {
   const [editedTitle, setEditedTitle] = useState('');
   const [editedPlatform, setEditedPlatform] = useState('');
 
+  // Setup hooks to manage deleting games
+  const [deletingGame, setDeletingGame] = useState(null);
+
   // Event listener to close dropdown menu when clicking outside
   const menuRef = useRef(null);
   useEffect(() => {
@@ -38,6 +41,7 @@ function App() {
   useEffect(() => {
     function handleClickOutsideModal(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setDeletingGame(null);
         setEditingGame(null);
         setEditedTitle('');
         setEditedPlatform('');
@@ -46,6 +50,7 @@ function App() {
 
     function handleKeyOutsideModal(event) {
       if (event.key === 'Escape') {
+        setDeletingGame(null);
         setEditingGame(null);
         setEditedTitle('');
         setEditedPlatform('');
@@ -136,7 +141,12 @@ function App() {
                   setOpenMenuId(null);
                 }}
                 >Edit</button>
-                <button className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left">Delete</button>
+
+                <button className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left"
+                onClick={(e) => {
+                  setDeletingGame(game);
+                }}
+                >Delete</button>
               </div>
               )}
 
@@ -150,7 +160,7 @@ function App() {
       </ul>
 
 
-        {/* Edit Game Modal */}
+      {/* Edit Game Modal */}
       {editingGame && (
 
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -182,6 +192,7 @@ function App() {
                   userID: selectedUserId
                 });
 
+                // TODO: extract refrshing games to own function
                 setEditingGame(null);
                 const res = await api.getGamesByUser(selectedUserId);
                 setGames(res.data);
@@ -193,6 +204,36 @@ function App() {
         </div>
 
       )}
+
+      {/* Delete Game Modal */}
+      {deletingGame && (
+
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div ref={modalRef} className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-2xl font-bold mb-4 text-red-500">Delete Game</h3>
+
+            <h4 className="text-lg font-semibold mb-4">Are you sure you want to delete this game?</h4>
+            <h4 className="text-lg font-semibold mb-4 underline">This action is irreversible</h4>
+
+            <div className="flex justify-end gap-2 mt-4">
+
+              <button className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 font-semibold"
+              onClick={() => setDeletingGame(null)}>Cancel</button>
+
+              <button className="px-4 py-2 bg-red-500 rounded hover:bg-red-700 font-semibold text-white"
+              onClick={async () => {
+                await api.delGame(deletingGame.id);
+
+                setDeletingGame(null)
+                const res = await api.getGamesByUser(selectedUserId);
+                setGames(res.data);
+              }}>Confirm</button>
+
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
 
   );
