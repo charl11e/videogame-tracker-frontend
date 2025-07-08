@@ -1,5 +1,10 @@
-import React, { useState, useEffect, useRef, use } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as api from './api';
+
+import EditGameModal from './components/EditGameModal';
+import DeleteGameModal from './components/DeleteGameModal';
+import UserSelector from './components/UserSelector';
+import Games from './components/Games';
 
 // Main App component
 function App() {
@@ -97,141 +102,51 @@ function App() {
       <h1 className="text-4xl font-bold">Game Library</h1>
 
       {/* Selector for picking a user */}
-      <div className="w-full flex justify-end">
-        <label htmlFor="user-select">Select User: </label>
-        <select id="user-select" value={selectedUserId}
-        onChange={(e) => {
-          const id = e.target.value;
-          setSelectedUserId(id);
-          localStorage.setItem('selectedUserId', id);
-        }}>
-          
-          <option value="">-- Choose a user --</option>
-          {users.map(user => (
-            <option key={user.id} value ={user.id}>{user.username}</option>
-          ))}
-        </select>
-      </div>
+      <UserSelector
+      selectedUserId = {selectedUserId}
+      setSelectedUserId = {setSelectedUserId}
+      users = {users} >
+      </UserSelector>
 
       {/* Display games for the selected user */}
       <h2>Games:</h2>
-      <ul className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
-        {games.length === 0 && selectedUserId && <li>No games found for user</li>}
-        {games.map (game => (
-          <li key={game.id} className="bg-white rounded-xl shadow-lg flex items-center gap-4 p-4 w-72 min-h-28 relative group" style={{ alignItems: 'flex-start' }}>
-            
-            {/* Display game cover image */}
-            <div className="w-16 h-20 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center"></div>
-            
-            {/* Hover effect for managing game */}
-            <button className="absolute top-4 right-5 text-gray-400 hover:text-gray-600 hidden group-hover:block text-3xl" title="Manage game"
-            onClick={(e) => {
-              setOpenMenuId (openMenuId === game.id ? null : game.id)
-            }}
-            >⋮</button>
-
-            {/* Dropdown menu for managing game */}
-            {openMenuId === game.id && (
-              <div ref={menuRef} className="absolute top-14 right-2 bg-white border rounded-md shadow-md z-10">
-                <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                onClick={(e) => {
-                  setEditingGame(game);
-                  setEditedTitle(game.title);
-                  setEditedPlatform(game.platform);
-                  setOpenMenuId(null);
-                }}
-                >Edit</button>
-
-                <button className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left"
-                onClick={(e) => {
-                  setDeletingGame(game);
-                }}
-                >Delete</button>
-              </div>
-              )}
-
-            {/* Game info */}
-            <div className="pr-6">
-              <p className="text-lg font-semibold text-gray-800 break-words hyphens-auto">{game.title}</p>
-              <p className="text-sm text-gray-500">{game.platform}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-
+      <Games
+      games = {games}
+      selectedUserId = {selectedUserId}
+      setOpenMenuId = {setOpenMenuId}
+      openMenuId = {openMenuId}
+      setEditingGame = {setEditingGame}
+      setEditedTitle = {setEditedTitle}
+      setEditedPlatform = {setEditedPlatform}
+      menuRef = {menuRef}
+      setDeletingGame = {setDeletingGame} >
+      </Games>
 
       {/* Edit Game Modal */}
       {editingGame && (
-
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div ref={modalRef} className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h3 className="text-2xl font-bold mb-4">Edit Game</h3>
-
-            <label className="block mb-2 text-xl font-semibold">
-              Title:
-              <input type="text" value={editedTitle} className="w-full p-2 border rounded mt-1 font-normal"
-              onChange={(e) => setEditedTitle(e.target.value)}></input>
-            </label>
-
-            <label className="block mb-2 text-xl font-semibold">
-              Platform:
-              <input type="text" value={editedPlatform} className="w-full p-2 border rounded mt-1 font-normal"
-              onChange={(e) => setEditedPlatform(e.target.value)}></input>
-            </label>
-
-            <div className="flex justify-end gap-2 mt-4">
-
-              <button className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 font-semibold"
-              onClick={() => setEditingGame(null)}>Cancel</button>
-
-              <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-semibold"
-              onClick={async () => {
-                await api.updateGame(editingGame.id, {
-                  title: editedTitle,
-                  platform: editedPlatform,
-                  userID: selectedUserId
-                });
-
-                // TODO: extract refrshing games to own function
-                setEditingGame(null);
-                const res = await api.getGamesByUser(selectedUserId);
-                setGames(res.data);
-              }}>Save</button>
-            </div>
-
-
-          </div>
-        </div>
-
+        <EditGameModal
+        modalRef = {modalRef}
+        editedTitle = {editedTitle}
+        setEditedTitle = {setEditedTitle}
+        editedPlatform = {editedPlatform}
+        setEditedPlatform = {setEditedPlatform}
+        setEditingGame = {setEditingGame}
+        editingGame = {editingGame}
+        selectedUserId = {selectedUserId}
+        setGames = {setGames} >
+        </EditGameModal>
       )}
+      
 
       {/* Delete Game Modal */}
       {deletingGame && (
-
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div ref={modalRef} className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h3 className="text-2xl font-bold mb-4 text-red-500">Delete Game</h3>
-
-            <h4 className="text-lg font-semibold mb-4">Are you sure you want to delete this game?</h4>
-            <h4 className="text-lg font-semibold mb-4 underline">This action is irreversible</h4>
-
-            <div className="flex justify-end gap-2 mt-4">
-
-              <button className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 font-semibold"
-              onClick={() => setDeletingGame(null)}>Cancel</button>
-
-              <button className="px-4 py-2 bg-red-500 rounded hover:bg-red-700 font-semibold text-white"
-              onClick={async () => {
-                await api.delGame(deletingGame.id);
-
-                setDeletingGame(null)
-                const res = await api.getGamesByUser(selectedUserId);
-                setGames(res.data);
-              }}>Confirm</button>
-
-            </div>
-          </div>
-        </div>
+        <DeleteGameModal
+        deletingGame = {deletingGame}
+        modalRef = {modalRef}
+        setDeletingGame = {setDeletingGame}
+        setGames = {setGames}
+        selectedUserId = {selectedUserId} >
+        </DeleteGameModal>
       )}
 
     </div>
