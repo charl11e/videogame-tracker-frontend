@@ -14,12 +14,22 @@ function Games ({
 
       <ul className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
         {games.length === 0 && selectedUserId && <li>No games found for user</li>}
-        {games.map (game => (
-          <li key={game.id} className="bg-white rounded-xl shadow-lg flex items-center gap-4 p-4 w-72 min-h-28 relative group" style={{ alignItems: 'flex-start' }}>
-            
-            {/* Display game cover image */}
-            <div className="w-16 h-20 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center"></div>
-            
+        {games.map (game => {
+
+          // Calculate progress bar colour
+          let progressColour = 'bg-green-700';
+          if (game.progress < 25) {
+            progressColour = 'bg-red-500';
+          } else if (game.progress < 50) {
+            progressColour = 'bg-orange-500'
+          } else if (game.progress < 100) {
+            progressColour = 'bg-green-500'
+          }
+        
+        return (
+          
+          <li key={game.id} className="bg-white rounded-xl shadow-lg flex flex-col gap-4 p-4 w-72 min-h-28 relative group" style={{ alignItems: 'flex-start' }}>
+                        
             {/* Hover effect for managing game */}
             <button className="absolute top-4 right-5 text-gray-400 hover:text-gray-600 hidden group-hover:block text-3xl" title="Manage game"
             onClick={(e) => {
@@ -48,26 +58,39 @@ function Games ({
               )}
 
             {/* Game info */}
-            <div className="pr-6">
+            <div className="flex items-center gap-4" style={{alignItems:'flex-start'}}>
+              
+              {/* Display game cover image // TODO: implement */}
+              <div className="w-16 h-20 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center"></div>
+              
+              <div className="pr-6">
 
-              <div className="flex items-center gap-2">
-                <p className="text-lg font-semibold text-gray-800 break-words hyphens-auto">{game.title}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-lg font-semibold text-gray-800 break-words hyphens-auto">{game.title}</p>
 
-                {game.status === "BACKLOG" && <img src="/icons/backlog.svg" alt="Backlog" title="Backlog" className="w-5 h-5"></img>}
-                {game.status === "IN_PROGRESS" && <img src="/icons/in-progress.svg" alt="In Progress" title="In Progress" className="w-5 h-5"></img>}
-                {game.status === "FINISHED" && <img src="/icons/finished.svg" alt="Finished" title="Finished" className="w-5 h-5"></img>}
-                {game.status === "ABANDONED" && <img src="/icons/abandoned.svg" alt="Abandoned" title="Abandoned" className="w-5 h-5"></img>}
+                  {game.status === "BACKLOG" && <img src="/icons/backlog.svg" alt="Backlog" title="Backlog" className="w-5 h-5"></img>}
+                  {game.status === "IN_PROGRESS" && <img src="/icons/in-progress.svg" alt="In Progress" title="In Progress" className="w-5 h-5"></img>}
+                  {game.status === "FINISHED" && <img src="/icons/finished.svg" alt="Finished" title="Finished" className="w-5 h-5"></img>}
+                  {game.status === "ABANDONED" && <img src="/icons/abandoned.svg" alt="Abandoned" title="Abandoned" className="w-5 h-5"></img>}
 
+                </div>
+
+                <p className="text-sm text-gray-500">{game.platform}</p>
               </div>
-
-              <p className="text-sm text-gray-500">{game.platform}</p>
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="w-full flex items-center justify-between mt-1 gap-2">
+              <div className="h-2 w-full h-2 bg-gray-300 rounded mt-2">
+                <div className={`h-full ${progressColour} rounded`} style={{ width: `${game.progress}%` }}></div>
+              </div>
+              <span className="h-3 text-s text-gray-600 font-medium w-10 text-center leading-none">{game.progress}%</span>
             </div>
           </li>
-        ))}
-      </ul>
-
-    )
-
+        )
+      })}
+    </ul>
+  )
 }
 
 export default Games;

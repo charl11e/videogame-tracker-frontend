@@ -6,7 +6,6 @@ import Games from './components/Games';
 import useGameUserData from './hooks/GameUserData';
 import useModalMenu from './hooks/ModalMenu';
 
-// Main App component
 function App() {
 
   const { users, selectedUserId, games, setSelectedUserId, setGames } = useGameUserData();
