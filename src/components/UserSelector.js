@@ -4,8 +4,8 @@ function UserSelector ({
     users
 }) {
     return (
-        <div className="w-full flex justify-end">
-            <label htmlFor="user-select">Select User: </label>
+        <div className="w-full flex justify-end gap-2">
+            <label htmlFor="user-select">Select User:</label>
             <select id="user-select" value={selectedUserId}
             onChange={(e) => {
                 const id = e.target.value;

@@ -1,5 +1,6 @@
 import EditGameModal from './components/EditGameModal';
 import DeleteGameModal from './components/DeleteGameModal';
+import ProgressModal from './components/ProgressModal';
 import UserSelector from './components/UserSelector';
 import Games from './components/Games';
 
@@ -9,7 +10,7 @@ import useModalMenu from './hooks/ModalMenu';
 function App() {
 
   const { users, selectedUserId, games, setSelectedUserId, setGames } = useGameUserData();
-  const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef } = useModalMenu();
+  const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus } = useModalMenu();
 
   return (
     <div className="min-h-screen bg-neutral-100 p-4 gap-4 items-center flex flex-col">
@@ -24,7 +25,6 @@ function App() {
       </UserSelector>
 
       {/* Display games for the selected user */}
-      <h2>Games:</h2>
       <Games
       games = {games}
       selectedUserId = {selectedUserId}
@@ -34,7 +34,10 @@ function App() {
       setEditedTitle = {setEditedTitle}
       setEditedPlatform = {setEditedPlatform}
       menuRef = {menuRef}
-      setDeletingGame = {setDeletingGame} >
+      setDeletingGame = {setDeletingGame}
+      setUpdatingGame = {setUpdatingGame}
+      setUpdatedProgress = {setUpdatedProgress}
+      setUpdatedStatus = {setUpdatedStatus} >
       </Games>
 
       {/* Edit Game Modal */}
@@ -62,6 +65,20 @@ function App() {
         setGames = {setGames}
         selectedUserId = {selectedUserId} >
         </DeleteGameModal>
+      )}
+
+      {/* Update progress Modal */}
+      {updatingGame && (
+        <ProgressModal
+        modalRef = {modalRef}
+        setUpdatingGame = {setUpdatingGame}
+        updatingGame = {updatingGame}
+        selectedUserId = {selectedUserId}
+        updatedProgress = {updatedProgress}
+        updatedStatus = {updatedStatus}
+        setGames = {setGames}
+         >
+        </ProgressModal>
       )}
 
     </div>

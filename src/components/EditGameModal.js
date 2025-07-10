@@ -42,7 +42,7 @@ function EditGameModal({
                         title: editedTitle,
                         platform: editedPlatform,
                         userID: selectedUserId,
-                        status: editingGame.status, // TODO: need to update status/progress in edit modal
+                        status: editingGame.status,
                         progress: editingGame.progress
                     });
 

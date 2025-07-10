@@ -8,6 +8,9 @@ function Games ({
     setEditedPlatform,
     menuRef,
     setDeletingGame,
+    setUpdatingGame,
+    setUpdatedProgress,
+    setUpdatedStatus
 }) {
     
     return (
@@ -49,9 +52,20 @@ function Games ({
                 }}
                 >Edit</button>
 
+                <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                onClick={(e) => {
+                  setUpdatingGame(game);
+                  setUpdatedStatus(game.status);
+                  setUpdatedProgress(game.progress);
+                  setOpenMenuId(null);
+                }}>
+                  Progress
+                </button>
+
                 <button className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left"
                 onClick={(e) => {
                   setDeletingGame(game);
+                  setOpenMenuId(null);
                 }}
                 >Delete</button>
               </div>

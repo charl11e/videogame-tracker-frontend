@@ -13,6 +13,11 @@ function useModalMenu() {
   // Setup hooks to manage deleting games
   const [deletingGame, setDeletingGame] = useState(null);
 
+  // Setup hooks to manage updating game progress
+  const [updatingGame, setUpdatingGame] = useState(null);
+  const [updatedProgress, setUpdatedProgress] = useState(0);
+  const [updatedStatus, setUpdatedStatus] = useState("IN_PROGRESS");
+
   // Event listener to close dropdown menu when clicking outside
   const menuRef = useRef(null);
   useEffect(() => {
@@ -29,24 +34,29 @@ function useModalMenu() {
   }, []);
 
 
+  // Reset hooks when modal closes
+  function closeModal() {
+    setDeletingGame(null);
+    setEditingGame(null);
+    setEditedTitle('');
+    setEditedPlatform('');
+    setUpdatingGame(null);
+    setUpdatedProgress(0);
+    setUpdatedStatus("IN_PROGRESS");
+  }
+
   // Event listener to close modal when clicking outside
   const modalRef = useRef(null);
   useEffect(() => {
     function handleClickOutsideModal(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setDeletingGame(null);
-        setEditingGame(null);
-        setEditedTitle('');
-        setEditedPlatform('');
+        closeModal()
       }
     }
 
     function handleKeyOutsideModal(event) {
       if (event.key === 'Escape') {
-        setDeletingGame(null);
-        setEditingGame(null);
-        setEditedTitle('');
-        setEditedPlatform('');
+        closeModal()
       }
     }
 
@@ -72,7 +82,13 @@ function useModalMenu() {
     setEditedPlatform,
     setDeletingGame,
     modalRef,
-    menuRef
+    menuRef,
+    updatingGame,
+    setUpdatingGame,
+    updatedProgress,
+    setUpdatedProgress,
+    updatedStatus,
+    setUpdatedStatus
   }
 
 } 
