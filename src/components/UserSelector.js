@@ -5,8 +5,8 @@ function UserSelector ({
 }) {
     return (
         <div className="w-full flex justify-end gap-2">
-            <label htmlFor="user-select">Select User:</label>
-            <select id="user-select" value={selectedUserId}
+            <label htmlFor="user-select" className="text-xl px-1 py-2 font-medium">Select User:</label>
+            <select id="user-select" value={selectedUserId} className="block px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg"
             onChange={(e) => {
                 const id = e.target.value;
                 setSelectedUserId(id);

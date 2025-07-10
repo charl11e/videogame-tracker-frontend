@@ -77,6 +77,8 @@ function App() {
         updatedProgress = {updatedProgress}
         updatedStatus = {updatedStatus}
         setGames = {setGames}
+        setUpdatedProgress = {setUpdatedProgress}
+        setUpdatedStatus = {setUpdatedStatus}
          >
         </ProgressModal>
       )}
