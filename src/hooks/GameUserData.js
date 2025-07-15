@@ -3,7 +3,7 @@ import * as api from '../api';
 
 function useGameUserData() {
     
-    // Setup useState hooks for selecting a user, and their games
+    // Setup useState for selecting a user, and their games
     const [users, setUsers] = useState([]);
     const [selectedUserId, setSelectedUserId] = useState('');
     const [games, setGames] = useState([]);

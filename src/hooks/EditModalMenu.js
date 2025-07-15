@@ -1,19 +1,21 @@
 import {useState, useEffect, useRef} from 'react';
 
+
+// Covers modals for editing/deleting/updating games
 function useModalMenu() {
 
-  // Setup hooks to manage game menus
+  // Setup use states to manage game menus
   const [openMenuId, setOpenMenuId] = useState(null);
 
-  // Setup hooks to manage editing games
+  // Setup use states to manage editing games
   const [editingGame, setEditingGame] = useState(null);
   const [editedTitle, setEditedTitle] = useState('');
   const [editedPlatform, setEditedPlatform] = useState('');
 
-  // Setup hooks to manage deleting games
+  // Setup use states to manage deleting games
   const [deletingGame, setDeletingGame] = useState(null);
 
-  // Setup hooks to manage updating game progress
+  // Setup use states to manage updating game progress
   const [updatingGame, setUpdatingGame] = useState(null);
   const [updatedProgress, setUpdatedProgress] = useState(0);
   const [updatedStatus, setUpdatedStatus] = useState("IN_PROGRESS");
