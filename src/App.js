@@ -13,7 +13,7 @@ import AddButton from './components/AddButton';
 
 function App() {
 
-  const { users, selectedUserId, games, setSelectedUserId, setGames } = useGameUserData();
+  const { users, selectedUserId, games, setSelectedUserId, setGames, setUsers } = useGameUserData();
   const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus } = useModalMenu();
   const { showAddGameModal, setShowAddGameModal, newGameTitle, setNewGameTitle, newGamePlatform, setNewGamePlatform, newGameProgress, setNewGameProgress, newGameStatus, setNewGameStatus, showAddUserModal, setShowAddUserModal, newUsername, setNewUsername, addModalRef} = useAddModal();
 
@@ -97,7 +97,11 @@ function App() {
       {showAddUserModal && (
         <AddUserModal
         showAddUserModal = {showAddUserModal}
-        addModalRef = {addModalRef} >
+        addModalRef = {addModalRef}
+        newUsername = {newUsername}
+        setNewUsername = {setNewUsername}
+        setShowAddUserModal = {setShowAddUserModal}
+        setUsers = {setUsers} >
         </AddUserModal>
       )}
 

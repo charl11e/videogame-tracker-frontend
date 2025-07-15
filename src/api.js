@@ -14,3 +14,5 @@ export const fetchGames = () => API.get('/games');
 export const addGame = (game) => API.post('/games', game);
 export const delGame = (id) => API.delete('/games/' + id);
 export const updateGame = (id, game) => API.put('/games/' + id, game);
+
+// TODO: add api error handling
