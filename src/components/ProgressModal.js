@@ -32,7 +32,7 @@ function ProgressModal({
                 <h3 className="text-2xl font-bold mb-4">Update Game</h3>
 
                 <label htmlFor="progress" className="block text-xl font-medium text-gray-700">
-                    Completion: {updatedProgress}
+                    Completion: {updatedProgress}%
                 </label>
                 <input id="progress" type="range" min="0" max="100" step="5" className={`w-full ${getSliderColour(updatedProgress)}`} value={updatedProgress}
                 onChange={(e) => setUpdatedProgress(e.target.value)}></input>

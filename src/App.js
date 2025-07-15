@@ -15,7 +15,7 @@ function App() {
 
   const { users, selectedUserId, games, setSelectedUserId, setGames } = useGameUserData();
   const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus } = useModalMenu();
-  const { showAddGameModal, setShowAddGameModal, newGameTitle, newGamePlatform, setNewGamePlatform, newGameProgress, setNewGameProcess, newGameStatus, setNewGameStatus, showAddUserModal, setShowAddUserModal, newUsername, setNewUsername, addModalRef} = useAddModal();
+  const { showAddGameModal, setShowAddGameModal, newGameTitle, setNewGameTitle, newGamePlatform, setNewGamePlatform, newGameProgress, setNewGameProgress, newGameStatus, setNewGameStatus, showAddUserModal, setShowAddUserModal, newUsername, setNewUsername, addModalRef} = useAddModal();
 
   return (
     <div className="min-h-screen bg-neutral-100 p-4 gap-4 items-center flex flex-col">
@@ -105,7 +105,18 @@ function App() {
       {showAddGameModal && (
         <AddGameModal
         showAddGameModal = {showAddGameModal}
-        addModalRef = {addModalRef} >
+        addModalRef = {addModalRef}
+        setShowAddGameModal = {setShowAddGameModal}
+        selectedUserId = {selectedUserId}
+        setGames = {setGames}
+        setNewGameTitle = {setNewGameTitle}
+        newGameTitle = {newGameTitle}
+        newGamePlatform = {newGamePlatform}
+        setNewGamePlatform = {setNewGamePlatform}
+        newGameProgress = {newGameProgress}
+        setNewGameProgress = {setNewGameProgress}
+        newGameStatus = {newGameStatus}
+        setNewGameStatus = {setNewGameStatus} >
         </AddGameModal>
       )}
 
