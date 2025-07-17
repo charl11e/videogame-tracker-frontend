@@ -14,7 +14,7 @@ import AddButton from './components/AddButton';
 function App() {
 
   const { users, selectedUserId, games, setSelectedUserId, setGames, setUsers } = useGameUserData();
-  const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus } = useModalMenu();
+  const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus, editedGameCover, setEditedGameCover } = useModalMenu();
   const { showAddGameModal, setShowAddGameModal, newGameTitle, setNewGameTitle, newGamePlatform, setNewGamePlatform, newGameProgress, setNewGameProgress, newGameStatus, setNewGameStatus, showAddUserModal, setShowAddUserModal, newUsername, setNewUsername, addModalRef} = useAddModal();
 
   return (
@@ -62,7 +62,9 @@ function App() {
         setEditingGame = {setEditingGame}
         editingGame = {editingGame}
         selectedUserId = {selectedUserId}
-        setGames = {setGames} >
+        setGames = {setGames}
+        editedGameCover = {editedGameCover}
+        setEditedGameCover = {setEditedGameCover} >
         </EditGameModal>
       )}
       

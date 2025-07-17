@@ -15,4 +15,11 @@ export const addGame = (game) => API.post('/games', game);
 export const delGame = (id) => API.delete('/games/' + id);
 export const updateGame = (id, game) => API.put('/games/' + id, game);
 
+export const uploadGameCover = (id, uploadFile) => {
+    const formData = new FormData();
+    formData.append("file", uploadFile);
+
+    return API.put(`/games/${id}/cover`, formData)
+}
+
 // TODO: add api error handling

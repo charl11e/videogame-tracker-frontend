@@ -9,7 +9,9 @@ function EditGameModal({
     setEditingGame,
     editingGame,
     selectedUserId,
-    setGames
+    setGames,
+    editedGameCover,
+    setEditedGameCover
 }) {
 
     if (!editingGame) return null;
@@ -31,6 +33,12 @@ function EditGameModal({
                     onChange={(e) => setEditedPlatform(e.target.value)}></input>
                 </label>
 
+                <label className="block mb-2 text-xl font-semibold">
+                    Cover image:
+                    <input type="file" accept="/image/*" className="w-full p-2 border rounded mt-1 font-normal"
+                    onChange={(e) => setEditedGameCover(e.target.files[0])}></input>
+                </label>
+
                 <div className="flex justify-end gap-2 mt-4">
 
                     <button className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 font-semibold"
@@ -45,6 +53,11 @@ function EditGameModal({
                         status: editingGame.status,
                         progress: editingGame.progress
                     });
+
+                    // Upload new game cover if uploaded
+                    if (editedGameCover) {
+                        await api.uploadGameCover(editingGame.id, editedGameCover);
+                    }
 
                     setEditingGame(null);
                     const res = await api.getGamesByUser(selectedUserId);

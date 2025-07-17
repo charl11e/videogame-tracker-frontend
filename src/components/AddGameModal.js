@@ -42,7 +42,7 @@ function AddGameModal({
                     onChange={(e) => setNewGameTitle(e.target.value)}></input>
                 </label>
 
-                <label className="block mb-2 text-xl font-semibold">
+                <label className="block mb-2 text-xl font-semibold mb-4">
                     Platform:
                     <input type="text" value={newGamePlatform} className="w-full p-2 border rounded mt-1 font-normal"
                     onChange={(e) => setNewGamePlatform(e.target.value)}></input>
@@ -55,7 +55,7 @@ function AddGameModal({
                 onChange={(e) => setNewGameProgress(e.target.value)}></input>
 
                 <label htmlFor="status-selector" className="block text-xl font-medium text-gray-700">Status:</label>
-                <select id="status" value={newGameStatus} className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg"
+                <select id="status" value={newGameStatus} className="block w-full mb-4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg"
                 onChange={(e) => {
                     setNewGameStatus(e.target.value)
                 }}>
@@ -64,6 +64,8 @@ function AddGameModal({
                     <option value="FINISHED">Finished</option>
                     <option value="ABANDONED">Abandoned</option>
                 </select>
+
+                <i className="text-m">You can add a game cover later in the edit menu</i>
 
                 <div className="flex justify-end gap-2 mt-4">
                     <button className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 font-semibold"

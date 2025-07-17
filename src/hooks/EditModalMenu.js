@@ -20,6 +20,9 @@ function useModalMenu() {
   const [updatedProgress, setUpdatedProgress] = useState(0);
   const [updatedStatus, setUpdatedStatus] = useState("IN_PROGRESS");
 
+  // Updating game cover
+  const [editedGameCover, setEditedGameCover] = useState(null);
+
   // Event listener to close dropdown menu when clicking outside
   const menuRef = useRef(null);
   useEffect(() => {
@@ -90,7 +93,9 @@ function useModalMenu() {
     updatedProgress,
     setUpdatedProgress,
     updatedStatus,
-    setUpdatedStatus
+    setUpdatedStatus,
+    editedGameCover,
+    setEditedGameCover
   }
 
 } 
