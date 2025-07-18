@@ -74,8 +74,9 @@ function Games ({
             {/* Game info */}
             <div className="flex items-center gap-4" style={{alignItems:'flex-start'}}>
               
-              {/* Display game cover image // TODO: implement */}
-              <div className="w-16 h-20 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center"></div>
+              {/* Display game cover image //TODO change URL when finish */}
+              {game.coverImage != null && <img src={`http://localhost:8080${game.coverImage}`} alt={`${game.title} cover`} className="w-32 h-48 object-cover rounded" />}
+              {game.coverImage === null && <div className="w-32 h-48 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center"></div>}
               
               <div className="pr-6">
 
