@@ -25,7 +25,7 @@ function AddButton({
         <div className="relative inline-block" ref={dropdownRef}>
             <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 flex items-center gap-2"
             onClick={() => setOpen(!open)}>
-                <img src='/icons/add.svg' alt="add" title="Add" className="w-5 h-5"></img>
+                <img src='/icons/add.svg' alt="Add" title="Add" className="w-5 h-5"></img>
             </button>
 
             {open && (

@@ -10,6 +10,7 @@ import useGameUserData from './hooks/GameUserData';
 import useModalMenu from './hooks/EditModalMenu';
 import useAddModal from './hooks/AddModalMenu';
 import AddButton from './components/AddButton';
+import SettingsButton from './components/SettingsButton';
 
 function App() {
 
@@ -33,6 +34,8 @@ function App() {
           setShowAddGameModal = {setShowAddGameModal}
           setShowAddUserModal = {setShowAddUserModal} >
         </AddButton>
+        <SettingsButton>
+        </SettingsButton>
       </div>
 
       {/* Display games for the selected user */}
