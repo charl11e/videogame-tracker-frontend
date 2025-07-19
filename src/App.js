@@ -137,7 +137,11 @@ function App() {
       {showSettingsModal && (
         <SettingsModal
           showSettingsModal = {showSettingsModal}
-          settingsModalRef = {settingsModalRef} >
+          settingsModalRef = {settingsModalRef}
+          setShowSettingsModal = {setShowSettingsModal}
+          selectedUserId = {selectedUserId}
+          setSelectedUserId = {setSelectedUserId}
+          setUsers = {setUsers} >
         </SettingsModal>
       )}
 
