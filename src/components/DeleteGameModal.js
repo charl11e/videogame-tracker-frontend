@@ -5,7 +5,8 @@ function DeleteGameModal({
     modalRef,
     setDeletingGame,
     setGames,
-    selectedUserId
+    selectedUserId,
+    setErrorMessage
 }) {
 
     if (!deletingGame) return null;
@@ -25,11 +26,16 @@ function DeleteGameModal({
 
                     <button className="px-4 py-2 bg-red-500 rounded hover:bg-red-700 font-semibold text-white"
                     onClick={async () => {
-                    await api.delGame(deletingGame.id);
+                        try {
+                            await api.delGame(deletingGame.id);
 
-                    setDeletingGame(null)
-                    const res = await api.getGamesByUser(selectedUserId);
-                    setGames(res.data);
+                            setDeletingGame(null)
+                            const res = await api.getGamesByUser(selectedUserId);
+                            setGames(res.data);
+                        } catch (err) {
+                            console.error("Error deleting game: " + err);
+                            setErrorMessage("Failed deleting game (" + err + ")");
+                        }
                     }}>Confirm</button>
                 </div>
             </div>

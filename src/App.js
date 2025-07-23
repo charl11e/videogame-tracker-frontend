@@ -13,16 +13,23 @@ import AddButton from './components/AddButton';
 import SettingsButton from './components/SettingsButton';
 import useSettingsModal from './hooks/SettingsModalMenu';
 import SettingsModal from './components/SettingsModal';
+import ErrorBar from './components/ErrorBar'
+import useErrorBarLogic from './hooks/ErrorBarLogic';
 
 function App() {
 
-  const { users, selectedUserId, games, setSelectedUserId, setGames, setUsers } = useGameUserData();
+  const [errorMessage, setErrorMessage] = useErrorBarLogic();
+  const { users, selectedUserId, games, setSelectedUserId, setGames, setUsers } = useGameUserData(setErrorMessage);
   const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus, editedGameCover, setEditedGameCover } = useModalMenu();
   const { showAddGameModal, setShowAddGameModal, newGameTitle, setNewGameTitle, newGamePlatform, setNewGamePlatform, newGameProgress, setNewGameProgress, newGameStatus, setNewGameStatus, showAddUserModal, setShowAddUserModal, newUsername, setNewUsername, addModalRef} = useAddModal();
   const { showSettingsModal, setShowSettingsModal, settingsModalRef } = useSettingsModal();
 
   return (
     <div className="min-h-screen bg-neutral-100 p-4 gap-4 items-center flex flex-col">
+      
+      <ErrorBar
+      errorMessage = {errorMessage} >
+      </ErrorBar>
 
       <h1 className="text-4xl font-bold">Game Library</h1>
 
@@ -71,7 +78,8 @@ function App() {
         selectedUserId = {selectedUserId}
         setGames = {setGames}
         editedGameCover = {editedGameCover}
-        setEditedGameCover = {setEditedGameCover} >
+        setEditedGameCover = {setEditedGameCover}
+        setErrorMessage = {setErrorMessage} >
         </EditGameModal>
       )}
       
@@ -83,7 +91,8 @@ function App() {
         modalRef = {modalRef}
         setDeletingGame = {setDeletingGame}
         setGames = {setGames}
-        selectedUserId = {selectedUserId} >
+        selectedUserId = {selectedUserId}
+        setErrorMessage = {setErrorMessage} >
         </DeleteGameModal>
       )}
 
@@ -98,7 +107,8 @@ function App() {
         updatedStatus = {updatedStatus}
         setGames = {setGames}
         setUpdatedProgress = {setUpdatedProgress}
-        setUpdatedStatus = {setUpdatedStatus} >
+        setUpdatedStatus = {setUpdatedStatus}
+        setErrorMessage = {setErrorMessage} >
         </ProgressModal>
       )}
 
@@ -110,7 +120,8 @@ function App() {
         newUsername = {newUsername}
         setNewUsername = {setNewUsername}
         setShowAddUserModal = {setShowAddUserModal}
-        setUsers = {setUsers} >
+        setUsers = {setUsers}
+        setErrorMessage = {setErrorMessage} >
         </AddUserModal>
       )}
 
@@ -129,7 +140,8 @@ function App() {
         newGameProgress = {newGameProgress}
         setNewGameProgress = {setNewGameProgress}
         newGameStatus = {newGameStatus}
-        setNewGameStatus = {setNewGameStatus} >
+        setNewGameStatus = {setNewGameStatus}
+        setErrorMessage = {setErrorMessage} >
         </AddGameModal>
       )}
 
@@ -141,7 +153,8 @@ function App() {
           setShowSettingsModal = {setShowSettingsModal}
           selectedUserId = {selectedUserId}
           setSelectedUserId = {setSelectedUserId}
-          setUsers = {setUsers} >
+          setUsers = {setUsers}
+          setErrorMessage = {setErrorMessage} >
         </SettingsModal>
       )}
 

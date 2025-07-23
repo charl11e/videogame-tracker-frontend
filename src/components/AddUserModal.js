@@ -6,7 +6,8 @@ function AddUserModal({
     newUsername,
     setNewUsername,
     setShowAddUserModal,
-    setUsers
+    setUsers,
+    setErrorMessage
 }) {
     
     if (!showAddUserModal) return null;
@@ -28,12 +29,17 @@ function AddUserModal({
 
                     <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 font-semibold"
                     onClick={async () => {
-                        await api.addUser({
-                            username: newUsername
-                        })
-                        setShowAddUserModal(false);
-                        const res = await api.fetchUsers();
-                        setUsers(res.data);
+                        try {
+                            await api.addUser({
+                                username: newUsername
+                            })
+                            setShowAddUserModal(false);
+                            const res = await api.fetchUsers();
+                            setUsers(res.data);
+                        } catch (err) {
+                            console.error("Error adding user: " + err)
+                            setErrorMessage("Failed adding user (" + err + ")");
+                        }
                     }}>Save</button>
                 </div>
             </div>

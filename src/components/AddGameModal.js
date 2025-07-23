@@ -13,7 +13,8 @@ function AddGameModal({
     newGameProgress,
     setNewGameProgress,
     newGameStatus,
-    setNewGameStatus
+    setNewGameStatus,
+    setErrorMessage
 }) {
     
     if (!showAddGameModal) return null;
@@ -73,17 +74,23 @@ function AddGameModal({
 
                     <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 font-semibold"
                     onClick={async () => {
-                        await api.addGame({
-                            title: newGameTitle,
-                            platform: newGamePlatform,
-                            userID: selectedUserId,
-                            status: newGameStatus,
-                            progress: newGameProgress
-                        });
+                        try {
+                            await api.addGame({
+                                title: newGameTitle,
+                                platform: newGamePlatform,
+                                userID: selectedUserId,
+                                status: newGameStatus,
+                                progress: newGameProgress
+                            });
 
-                        setShowAddGameModal(false);
-                        const res = await api.getGamesByUser(selectedUserId);
-                        setGames(res.data);
+                            setShowAddGameModal(false);
+                            const res = await api.getGamesByUser(selectedUserId);
+                            setGames(res.data);
+                        } catch (err) {
+                            console.error("Error adding game: " + err);
+                            setErrorMessage("Failed adding game (" + err + ")");
+
+                        }
                     }}>Save</button>
                 </div>
             </div>

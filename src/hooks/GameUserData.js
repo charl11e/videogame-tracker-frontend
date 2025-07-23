@@ -1,7 +1,9 @@
 import {useState, useEffect} from 'react';
 import * as api from '../api';
 
-function useGameUserData() {
+function useGameUserData(
+    setErrorMessage
+) {
     
     // Setup useState for selecting a user, and their games
     const [users, setUsers] = useState([]);
@@ -10,19 +12,35 @@ function useGameUserData() {
 
     // Get list of users
     useEffect(() => {
-    api.fetchUsers().then(res => setUsers(res.data))
-    .catch(err => console.error("Error fetching users:", err));
-    }, []);
+        async function fetchUsers() {
+            try {
+                let res = await api.fetchUsers();
+                setUsers(res.data);
+            } catch (err) {
+                console.error("Error fetching users:", err);
+                setErrorMessage("Failed fetching users (" + err + ")");
+            }
+        }
+        fetchUsers();
+    }, [setErrorMessage]);
 
     // Get games for the selected user
     useEffect(() => {
-    if (selectedUserId) {
-        api.getGamesByUser(selectedUserId).then(res => setGames(res.data))
-        .catch(err => console.error("Error fetching games for user:", err));
-    } else {
-        setGames([]);
-    }
-    }, [selectedUserId]);
+        async function fetchGames() {
+            try {
+                if (selectedUserId) {
+                    let res = await api.getGamesByUser(selectedUserId);
+                    setGames(res.data);
+                } else {
+                    setGames([]);
+                }
+            } catch (err) {
+                console.error("Error fetching games for user:", err);
+                setErrorMessage("Failed loading games for selected user (" + err + ")")
+            }
+        }
+        fetchGames()
+    }, [selectedUserId, setErrorMessage]);
 
     // Restore selected user from localstorage on initial load
     useEffect(() => {
