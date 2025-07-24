@@ -66,7 +66,7 @@ function AddGameModal({
                     <option value="ABANDONED">Abandoned</option>
                 </select>
 
-                <i className="text-m">You can add a game cover later in the edit menu</i>
+                <i className="text-m">You can add a game cover later when editing the game</i>
 
                 <div className="flex justify-end gap-2 mt-4">
                     <button className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 font-semibold"

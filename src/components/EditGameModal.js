@@ -1,6 +1,7 @@
-// TODO add file size limits for upload
-
 import * as api from '../api.js';
+import { useState, useEffect } from 'react';
+
+const UPLOAD_LIMIT = 5 * 1024 * 1024; // 5mb limit
 
 function EditGameModal({
     modalRef,
@@ -14,10 +15,67 @@ function EditGameModal({
     setGames,
     editedGameCover,
     setEditedGameCover,
-    setErrorMessage
+    setErrorMessage,
+    gameCoverUrl,
+    setGameCoverUrl
 }) {
 
+    // Handle colour of background of URL upload
+    const [urlColour, setUrlColour] = useState("");
+    
+    useEffect(() => {
+        if (!gameCoverUrl) {
+            setUrlColour("");
+            return;
+        }
+
+        const handler = setTimeout(() => {
+            getUrlBackground(gameCoverUrl).then(setUrlColour);
+        }, 1500);
+
+        return () => clearTimeout(handler);
+
+    }, [gameCoverUrl])
+
+    const getUrlBackground = async (url) => {
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            const contentType = response.headers.get('content-type');
+            if (response.ok && contentType && contentType.startsWith('image/')) {
+                return 'border-green-500'
+            } else {
+                return 'border-red-500'
+            }
+        } catch {
+            return 'border-red-500'
+        }
+    }
+
     if (!editingGame) return null;
+    
+    // Handle image upload via URL
+    const handleImageUploadUrl = async (url, id) => {
+        try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+
+            if (blob.size > UPLOAD_LIMIT) {
+                setErrorMessage("Image file must be less than 5MB")
+                return;
+            }
+
+            const file = new File([blob], "cover.jpg", {type: blob.type})
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            await api.uploadGameCover(id, file);
+        } catch (err) {
+            console.error("Error uploading image from URL: " + err)
+            setErrorMessage("Failed uploading image from URL (" + err + ")");
+        }
+    }
+
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -39,8 +97,25 @@ function EditGameModal({
                 <label className="block mb-2 text-xl font-semibold">
                     Cover image:
                     <input type="file" accept="image/*" className="w-full p-2 border rounded mt-1 font-normal"
-                    onChange={(e) => setEditedGameCover(e.target.files[0])}></input>
+                    onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file.size > UPLOAD_LIMIT) {
+                            setErrorMessage("Image file must be less than 5MB");
+                            e.target.value = "";
+                        } else {
+                        setEditedGameCover(file)}
+                        }
+                    }
+                    ></input>
                 </label>
+
+                <label className="block mb-2 text-lg font-semibold">
+                    Or upload from image URL:
+                    <input type="text" className={`w-full border rounded mt-1 font-normal border-4 ${urlColour} focus:outline-none`}
+                    onChange={(e) => setGameCoverUrl(e.target.value)}></input>
+                </label>
+
+                <i className="text-m">Must be an image file. Max size: 5MB</i>
 
                 <div className="flex justify-end gap-2 mt-4">
 
@@ -63,9 +138,15 @@ function EditGameModal({
                                 await api.uploadGameCover(editingGame.id, editedGameCover);
                             }
 
+                            if (gameCoverUrl) {
+                                await handleImageUploadUrl(gameCoverUrl, editingGame.id);
+                                setGameCoverUrl(null);
+                            }
+
                             setEditingGame(null);
                             const res = await api.getGamesByUser(selectedUserId);
                             setGames(res.data);
+
                         } catch (err) {
                             console.error("Error updating game: ", err);
                             setErrorMessage("Failed updating game (" + err + ")");

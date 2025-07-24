@@ -22,6 +22,7 @@ function useModalMenu() {
 
   // Updating game cover
   const [editedGameCover, setEditedGameCover] = useState(null);
+  const [gameCoverUrl, setGameCoverUrl] = useState(null);
 
   // Event listener to close dropdown menu when clicking outside
   const menuRef = useRef(null);
@@ -95,7 +96,9 @@ function useModalMenu() {
     updatedStatus,
     setUpdatedStatus,
     editedGameCover,
-    setEditedGameCover
+    setEditedGameCover,
+    gameCoverUrl,
+    setGameCoverUrl
   }
 
 } 

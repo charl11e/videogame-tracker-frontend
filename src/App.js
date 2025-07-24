@@ -22,7 +22,7 @@ function App() {
 
   const [errorMessage, setErrorMessage] = useErrorBarLogic();
   const { users, selectedUserId, games, setSelectedUserId, setGames, setUsers } = useGameUserData(setErrorMessage);
-  const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus, editedGameCover, setEditedGameCover } = useModalMenu();
+  const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus, editedGameCover, setEditedGameCover, gameCoverUrl, setGameCoverUrl } = useModalMenu();
   const { showAddGameModal, setShowAddGameModal, newGameTitle, setNewGameTitle, newGamePlatform, setNewGamePlatform, newGameProgress, setNewGameProgress, newGameStatus, setNewGameStatus, showAddUserModal, setShowAddUserModal, newUsername, setNewUsername, addModalRef} = useAddModal();
   const { showSettingsModal, setShowSettingsModal, settingsModalRef } = useSettingsModal();
   const { filter, setFilter, sort, setSort, filteredGames } = useFilterLogic(games);
@@ -93,7 +93,9 @@ function App() {
         setGames = {setGames}
         editedGameCover = {editedGameCover}
         setEditedGameCover = {setEditedGameCover}
-        setErrorMessage = {setErrorMessage} >
+        setErrorMessage = {setErrorMessage}
+        gameCoverUrl = {gameCoverUrl}
+        setGameCoverUrl = {setGameCoverUrl} >
         </EditGameModal>
       )}
       
