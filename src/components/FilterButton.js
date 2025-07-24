@@ -42,7 +42,7 @@ function FilterButton({
                 </button>
 
                 {isOpen && (
-                    <div className="absolute top-12 right-0 bg-white border rounded-md shadow-md break-normal w-64 flex flex-col p-2">
+                    <div className="absolute top-12 right-0 bg-white border rounded-md shadow-md break-normal w-64 flex flex-col p-2 z-50">
                         <h1 className="font-bold text-center">Show</h1>
                         
                         <div className="flex justify-between items-center my-2">
@@ -67,7 +67,18 @@ function FilterButton({
 
                         <h1 className="font-bold text-center">Sort By</h1>
                         
-                        <select id="sort"></select>
+                        <select id="sort" value={sort} className="block rounded-md shadow-sm w-full px-3 py-2 border border-gray-300 text-lg focus:ring-blue-500 focus:border-blue-500"
+                        onChange={(e) => {
+                            setSort(e.target.value);
+                        }}>
+                            <option value="az">Alphabetical (a-z)</option>
+                            <option value="za">Alphabetical (z-a)</option>
+                            <option value="status">Status</option>
+                            <option value="platform">Platform</option>
+                            <option value="progress">Completion</option>
+                            <option value="recent">Most Recent</option>
+                            <option value="oldest">Least Recent</option>
+                        </select>
                         {/* //TODO FINISH */}
 
                     </div>

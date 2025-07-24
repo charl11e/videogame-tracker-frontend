@@ -14,7 +14,39 @@ function useFilterLogic(games) {
             }
         }
 
-        // TODO: implement sort
+        switch (sort) {
+            case "az":
+                result.sort((a,b) => a.title.localeCompare(b.title));
+                break;
+            
+            case "za":
+                result.sort((a,b) => b.title.localeCompare(a.title));
+                break;
+
+            case "status":
+                result.sort((a,b) => b.status.localeCompare(a.status));
+                break;
+
+            case "platform":
+                result.sort((a,b) => a.platform.localeCompare(b.platform));
+                break;
+
+            case "progress":
+                result.sort((a,b) => b.progress - a.progress);
+                break;
+
+            case "recent":
+                result.sort((a,b) => b.id - a.id);
+                break;
+
+            case "oldest":
+                result.sort((a,b) => a.id - b.id);
+                break;
+
+            
+            default:
+                break;
+        }
         
         setFilteredGames(result);
     }, [games, filter, sort])
