@@ -79,8 +79,6 @@ function FilterButton({
                             <option value="recent">Most Recent</option>
                             <option value="oldest">Least Recent</option>
                         </select>
-                        {/* //TODO FINISH */}
-
                     </div>
                 )}
             </div>

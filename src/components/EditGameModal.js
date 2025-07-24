@@ -1,3 +1,5 @@
+// TODO add file size limits for upload
+
 import * as api from '../api.js';
 
 function EditGameModal({
