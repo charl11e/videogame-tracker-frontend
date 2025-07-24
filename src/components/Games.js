@@ -10,14 +10,16 @@ function Games ({
     setDeletingGame,
     setUpdatingGame,
     setUpdatedProgress,
-    setUpdatedStatus
+    setUpdatedStatus,
+    filteredGames
 }) {
     
     return (
 
       <ul className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
-        {games.length === 0 && selectedUserId && <li>No games found for user</li>}
-        {games.map (game => {
+        {filteredGames.length === 0 && selectedUserId && 
+        <li className="font-semibold col-span-full">No games found for user - add your first game or your filters may be too exclusive!</li>}
+        {filteredGames.map (game => {
 
           // Calculate progress bar colour
           let progressColour = 'bg-green-700';

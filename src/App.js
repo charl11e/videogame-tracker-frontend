@@ -15,6 +15,8 @@ import useSettingsModal from './hooks/SettingsModalMenu';
 import SettingsModal from './components/SettingsModal';
 import ErrorBar from './components/ErrorBar'
 import useErrorBarLogic from './hooks/ErrorBarLogic';
+import FilterButton from './components/FilterButton';
+import useFilterLogic from './hooks/FilterLogic';
 
 function App() {
 
@@ -23,6 +25,7 @@ function App() {
   const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus, editedGameCover, setEditedGameCover } = useModalMenu();
   const { showAddGameModal, setShowAddGameModal, newGameTitle, setNewGameTitle, newGamePlatform, setNewGamePlatform, newGameProgress, setNewGameProgress, newGameStatus, setNewGameStatus, showAddUserModal, setShowAddUserModal, newUsername, setNewUsername, addModalRef} = useAddModal();
   const { showSettingsModal, setShowSettingsModal, settingsModalRef } = useSettingsModal();
+  const { filter, setFilter, sort, setSort, filteredGames } = useFilterLogic(games);
 
   return (
     <div className="min-h-screen bg-neutral-100 p-4 gap-4 items-center flex flex-col">
@@ -49,6 +52,16 @@ function App() {
         </SettingsButton>
       </div>
 
+      {/* Filter Button */}
+      <div className='flex justify-end items-center gap-4 w-full px-3'>
+        <FilterButton
+          filter = {filter}
+          setFilter = {setFilter}
+          sort = {sort}
+          setSort = {setSort} >
+        </FilterButton>
+      </div>
+
       {/* Display games for the selected user */}
       <Games
       games = {games}
@@ -62,7 +75,8 @@ function App() {
       setDeletingGame = {setDeletingGame}
       setUpdatingGame = {setUpdatingGame}
       setUpdatedProgress = {setUpdatedProgress}
-      setUpdatedStatus = {setUpdatedStatus} >
+      setUpdatedStatus = {setUpdatedStatus}
+      filteredGames = {filteredGames} >
       </Games>
 
       {/* Edit Game Modal */}

@@ -22,4 +22,4 @@ export const uploadGameCover = (id, uploadFile) => {
     return API.put(`/games/${id}/cover`, formData)
 }
 
-// TODO: add api error handling
+// TODO: improve API error handling - don't show generic errors, also get error to go away after a while
