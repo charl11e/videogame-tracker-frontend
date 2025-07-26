@@ -18,6 +18,7 @@ import useErrorBarLogic from './hooks/ErrorBarLogic';
 import FilterButton from './components/FilterButton';
 import useFilterLogic from './hooks/FilterLogic';
 import Footer from './components/Footer';
+import Header from './components/Header';
 
 function App() {
 
@@ -37,32 +38,28 @@ function App() {
         errorMessage = {errorMessage} >
         </ErrorBar>
 
-        <h1 className="text-4xl font-bold">Game Library</h1>
+        <Header/>
 
-        {/* Selector for picking a user */}
+        {/* Buttons */}
         <div className="flex justify-end items-center gap-4 w-full px-4">
           <UserSelector
-          selectedUserId = {selectedUserId}
-          setSelectedUserId = {setSelectedUserId}
-          users = {users} >
+            selectedUserId = {selectedUserId}
+            setSelectedUserId = {setSelectedUserId}
+            users = {users} >
           </UserSelector>
           <AddButton
             setShowAddGameModal = {setShowAddGameModal}
             setShowAddUserModal = {setShowAddUserModal} >
           </AddButton>
-          <SettingsButton
-          setShowSettingsModal = {setShowSettingsModal}>
-          </SettingsButton>
-        </div>
-
-        {/* Filter Button */}
-        <div className='flex justify-end items-center gap-4 w-full px-3'>
           <FilterButton
             filter = {filter}
             setFilter = {setFilter}
             sort = {sort}
             setSort = {setSort} >
           </FilterButton>
+          <SettingsButton
+            setShowSettingsModal = {setShowSettingsModal}>
+          </SettingsButton>
         </div>
 
         {/* Display games for the selected user */}
@@ -179,8 +176,7 @@ function App() {
 
       </main>
 
-      <Footer>
-      </Footer>
+      <Footer/>
 
     </div>
 

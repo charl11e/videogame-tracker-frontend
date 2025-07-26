@@ -29,7 +29,7 @@ function AddButton({
             </button>
 
             {open && (
-                <div className="absolute top-12 right-0 bg-white border rounded-md shadow-md">
+                <div className="absolute top-12 right-0 bg-white border rounded-md shadow-md z-50">
                     <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left whitespace-nowrap"
                     onClick={(e) => {
                         setOpen(false);

@@ -36,7 +36,7 @@ function FilterButton({
 
         <div>
             <div className="relative inline-block" ref={dropdownRef}>
-                <button className="bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-700"
+                <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700"
                 onClick={() => setOpen(!isOpen)}>
                     <img src="/icons/filter.svg" alt="Filter" title="Filter" className="w-5 h-5"></img>
                 </button>
