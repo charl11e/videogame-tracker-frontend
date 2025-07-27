@@ -31,17 +31,13 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-100 flex flex-col">
+
+      <Header/>
       
       <main className="flex-1 p-4 gap-4 items-center flex flex-col">
 
-        <ErrorBar
-        errorMessage = {errorMessage} >
-        </ErrorBar>
-
-        <Header/>
-
         {/* Buttons */}
-        <div className="flex justify-end items-center gap-4 w-full px-4">
+        <div className="flex justify-end items-center gap-4 mt-2 w-full px-4">
           <UserSelector
             selectedUserId = {selectedUserId}
             setSelectedUserId = {setSelectedUserId}
@@ -61,6 +57,10 @@ function App() {
             setShowSettingsModal = {setShowSettingsModal}>
           </SettingsButton>
         </div>
+
+        <ErrorBar
+        errorMessage = {errorMessage} >
+        </ErrorBar>
 
         {/* Display games for the selected user */}
         <Games

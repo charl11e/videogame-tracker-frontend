@@ -33,7 +33,7 @@ function Games ({
         
         return (
           
-          <li key={game.id} className="bg-white rounded-xl shadow-lg flex flex-col gap-4 p-4 w-72 min-h-28 relative group" style={{ alignItems: 'flex-start' }}>
+          <li key={game.id} className="bg-white rounded-xl shadow-lg flex flex-col gap-4 p-4 w-72 min-h-28 relative group hover:shadow-2xl" style={{ alignItems: 'flex-start' }}>
                         
             {/* Hover effect for managing game */}
             <button className="absolute top-4 right-5 text-gray-400 hover:text-gray-600 hidden group-hover:block text-3xl" title="Manage game"
