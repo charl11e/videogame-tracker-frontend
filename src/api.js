@@ -4,22 +4,98 @@ const API = axios.create( {
     baseURL: 'http://localhost:8080/api'
 })
 
-export const fetchUsers = () => API.get('/users');
-export const addUser = (user) => API.post('/users', user);
-export const delUser = (id) => API.delete('/users/' + id);
-export const updateUser = (id, user) => API.put('/users/' + id, user);
-export const getGamesByUser = (id) => API.get('/users/' + id + '/games');
-
-export const fetchGames = () => API.get('/games');
-export const addGame = (game) => API.post('/games', game);
-export const delGame = (id) => API.delete('/games/' + id);
-export const updateGame = (id, game) => API.put('/games/' + id, game);
-
-export const uploadGameCover = (id, uploadFile) => {
-    const formData = new FormData();
-    formData.append("file", uploadFile);
-
-    return API.put(`/games/${id}/cover`, formData)
+export const fetchUsers = async () => {
+    try {
+        return await API.get('/users');
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    }
 }
 
-// TODO: improve API error handling - don't show generic errors, also get error to go away after a while
+export const addUser = async (user) => {
+    try {
+        return await API.post('/users', user);
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    }
+}
+
+export const delUser = async (id) => {
+    try {
+        return await API.delete('/users/' + id);
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    }
+}
+
+export const updateUser = async (id, user) => {
+    try {
+        return await API.put('/users/' + id, user);
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    }
+}
+
+export const getGamesByUser = async (id) => {
+    try {
+        return await API.get('/users/' + id + '/games');
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    }
+}
+
+export const fetchGames = async () => {
+    try {
+        return await API.get('/games');
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    } 
+}
+
+export const addGame = async (game) => {
+    try {
+        return await API.post('/games', game);
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    }
+}
+
+export const delGame = async (id) => {
+    try {
+        return await API.delete('/games' + id);
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    }
+}
+
+export const updateGame = async (id, game) => {
+    try {
+        return await API.put('/games/' + id, game);
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    }
+}
+
+export const uploadGameCover = async (id, uploadFile) => {
+    try {
+        const formData = new FormData();
+        formData.append("file", uploadFile);
+        return API.put(`/games/${id}/cover`, formData)
+    } catch (err) {
+        throw getApiErrorMessage(err);
+    }
+}
+
+// TODO: improve API error handling - don't show generic errors
+function getApiErrorMessage(error) {
+    if (error.response && error.response.data && error.response.data.message) {
+        return error.response.data.message
+    }
+    if (error.response && error.response.data) {
+        return error.response.data;
+    }
+    if (error.message) {
+        return error.message;
+    }
+    return "Unknown Error";
+}
