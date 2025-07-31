@@ -26,7 +26,7 @@ function App() {
   const { users, selectedUserId, games, setSelectedUserId, setGames, setUsers } = useGameUserData(setErrorMessage);
   const { openMenuId, editingGame, editedTitle, editedPlatform, deletingGame, setOpenMenuId, setEditingGame, setEditedTitle, setEditedPlatform, setDeletingGame, modalRef, menuRef, updatingGame, setUpdatingGame, updatedProgress, setUpdatedProgress, updatedStatus, setUpdatedStatus, editedGameCover, setEditedGameCover, gameCoverUrl, setGameCoverUrl } = useModalMenu();
   const { showAddGameModal, setShowAddGameModal, newGameTitle, setNewGameTitle, newGamePlatform, setNewGamePlatform, newGameProgress, setNewGameProgress, newGameStatus, setNewGameStatus, showAddUserModal, setShowAddUserModal, newUsername, setNewUsername, addModalRef} = useAddModal();
-  const { showSettingsModal, setShowSettingsModal, settingsModalRef } = useSettingsModal();
+  const { showSettingsModal, setShowSettingsModal, settingsModalRef, updatedUsername, setUpdatedUsername } = useSettingsModal();
   const { filter, setFilter, sort, setSort, filteredGames } = useFilterLogic(games);
 
   return (
@@ -170,7 +170,9 @@ function App() {
             selectedUserId = {selectedUserId}
             setSelectedUserId = {setSelectedUserId}
             setUsers = {setUsers}
-            setErrorMessage = {setErrorMessage} >
+            setErrorMessage = {setErrorMessage}
+            updatedUsername = {updatedUsername}
+            setUpdatedUsername = {setUpdatedUsername} >
           </SettingsModal>
         )}
 

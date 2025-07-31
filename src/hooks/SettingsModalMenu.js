@@ -4,6 +4,8 @@ function useSettingsModal() {
 
     const [showSettingsModal, setShowSettingsModal] = useState(false);
 
+    const [updatedUsername, setUpdatedUsername] = useState(null);
+
     const settingsModalRef = useRef(null);
     useEffect(() => {
         function handeClickOutsideSettingsModal(event) {
@@ -31,7 +33,9 @@ function useSettingsModal() {
     return {
         showSettingsModal,
         setShowSettingsModal,
-        settingsModalRef
+        settingsModalRef,
+        updatedUsername,
+        setUpdatedUsername
     };
 }
 

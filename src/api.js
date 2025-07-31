@@ -86,7 +86,6 @@ export const uploadGameCover = async (id, uploadFile) => {
     }
 }
 
-// TODO: improve API error handling - don't show generic errors
 function getApiErrorMessage(error) {
     if (error.response && error.response.data && error.response.data.message) {
         return error.response.data.message
