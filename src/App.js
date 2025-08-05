@@ -32,6 +32,10 @@ function App() {
   return (
     <div className="min-h-screen bg-neutral-100 flex flex-col">
 
+      <ErrorBar
+        errorMessage = {errorMessage} >
+      </ErrorBar>
+
       <Header/>
       
       <main className="flex-1 p-4 gap-4 items-center flex flex-col">
@@ -57,10 +61,6 @@ function App() {
             setShowSettingsModal = {setShowSettingsModal}>
           </SettingsButton>
         </div>
-
-        <ErrorBar
-        errorMessage = {errorMessage} >
-        </ErrorBar>
 
         {/* Display games for the selected user */}
         <Games

@@ -74,22 +74,26 @@ function AddGameModal({
 
                     <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 font-semibold"
                     onClick={async () => {
-                        try {
-                            await api.addGame({
-                                title: newGameTitle,
-                                platform: newGamePlatform,
-                                userID: selectedUserId,
-                                status: newGameStatus,
-                                progress: newGameProgress
-                            });
+                        if (!newGameTitle || !newGamePlatform) {
+                            setErrorMessage("Title and platform must not be blank")
+                        } else {
+                            try {
+                                await api.addGame({
+                                    title: newGameTitle,
+                                    platform: newGamePlatform,
+                                    userID: selectedUserId,
+                                    status: newGameStatus,
+                                    progress: newGameProgress
+                                });
 
-                            setShowAddGameModal(false);
-                            const res = await api.getGamesByUser(selectedUserId);
-                            setGames(res.data);
-                        } catch (err) {
-                            console.error("Error adding game: " + err);
-                            setErrorMessage("Failed adding game (" + err + ")");
+                                setShowAddGameModal(false);
+                                const res = await api.getGamesByUser(selectedUserId);
+                                setGames(res.data);
+                            } catch (err) {
+                                console.error("Error adding game: " + err);
+                                setErrorMessage("Failed adding game (" + err + ")");
 
+                            }
                         }
                     }}>Save</button>
                 </div>

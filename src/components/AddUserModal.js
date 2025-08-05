@@ -29,16 +29,20 @@ function AddUserModal({
 
                     <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 font-semibold"
                     onClick={async () => {
-                        try {
-                            await api.addUser({
-                                username: newUsername
-                            })
-                            setShowAddUserModal(false);
-                            const res = await api.fetchUsers();
-                            setUsers(res.data);
-                        } catch (err) {
-                            console.error("Error adding user: " + err)
-                            setErrorMessage("Failed adding user (" + err + ")");
+                        if (!newUsername) {
+                            setErrorMessage("Username must not be blank")
+                        } else {
+                            try {
+                                await api.addUser({
+                                    username: newUsername
+                                })
+                                setShowAddUserModal(false);
+                                const res = await api.fetchUsers();
+                                setUsers(res.data);
+                            } catch (err) {
+                                console.error("Error adding user: " + err)
+                                setErrorMessage("Failed adding user (" + err + ")");
+                            }
                         }
                     }}>Save</button>
                 </div>

@@ -124,32 +124,36 @@ function EditGameModal({
 
                     <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-semibold"
                     onClick={async () => {
-                        try {
-                            await api.updateGame(editingGame.id, {
-                                title: editedTitle,
-                                platform: editedPlatform,
-                                userID: selectedUserId,
-                                status: editingGame.status,
-                                progress: editingGame.progress
-                            });
+                        if (!editedTitle || !editedPlatform) {
+                            setErrorMessage("Title and platform must not be blank")
+                        } else {
+                            try {
+                                await api.updateGame(editingGame.id, {
+                                    title: editedTitle,
+                                    platform: editedPlatform,
+                                    userID: selectedUserId,
+                                    status: editingGame.status,
+                                    progress: editingGame.progress
+                                });
 
-                            // Upload new game cover if uploaded
-                            if (editedGameCover) {
-                                await api.uploadGameCover(editingGame.id, editedGameCover);
+                                // Upload new game cover if uploaded
+                                if (editedGameCover) {
+                                    await api.uploadGameCover(editingGame.id, editedGameCover);
+                                }
+
+                                if (gameCoverUrl) {
+                                    await handleImageUploadUrl(gameCoverUrl, editingGame.id);
+                                    setGameCoverUrl(null);
+                                }
+
+                                setEditingGame(null);
+                                const res = await api.getGamesByUser(selectedUserId);
+                                setGames(res.data);
+
+                            } catch (err) {
+                                console.error("Error updating game: ", err);
+                                setErrorMessage("Failed updating game (" + err + ")");
                             }
-
-                            if (gameCoverUrl) {
-                                await handleImageUploadUrl(gameCoverUrl, editingGame.id);
-                                setGameCoverUrl(null);
-                            }
-
-                            setEditingGame(null);
-                            const res = await api.getGamesByUser(selectedUserId);
-                            setGames(res.data);
-
-                        } catch (err) {
-                            console.error("Error updating game: ", err);
-                            setErrorMessage("Failed updating game (" + err + ")");
                         }
                     }}>Save</button>
                 </div>
