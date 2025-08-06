@@ -26,17 +26,21 @@ function SettingsModal({
                 </label>
                 <button className="px-4 py-2 mt-2 mb-8 bg-blue-600 text-white rounded hover:bg-blue-700 font-semibold"
                 onClick={async () => {
-                    try {
-                        await api.updateUser(selectedUserId, {
-                            username: updatedUsername
-                        });
-                        const res = await api.fetchUsers();
-                        setUsers(res.data);
-                        setShowSettingsModal(false);
-                    } catch (err) {
-                        console.error("Error updating user: ", err);
-                        setErrorMessage("Failed updating user (" + err + ")");
-                    }
+                    if (!updatedUsername) {
+                        setErrorMessage("Username must not be blank");
+                    } else {
+                        try {
+                            await api.updateUser(selectedUserId, {
+                                username: updatedUsername
+                            });
+                            const res = await api.fetchUsers();
+                            setUsers(res.data);
+                            setShowSettingsModal(false);
+                        } catch (err) {
+                            console.error("Error updating user: ", err);
+                            setErrorMessage("Failed updating user (" + err + ")");
+                        }
+                    };
                 }}>
                     Update
                 </button>
@@ -70,4 +74,4 @@ function SettingsModal({
 
 export default SettingsModal;
 
-// TODO allow user to update username
+// TODO initialise all data - frontend and make endpoint on API
